@@ -2,7 +2,7 @@
 //  Kiyotaka Kokubun
 //  UID:104669898
 //
-//  PIC10A Virtanen
+//  PIC10A  Virtanen
 //  Winter 16
 //
 //  hw6
