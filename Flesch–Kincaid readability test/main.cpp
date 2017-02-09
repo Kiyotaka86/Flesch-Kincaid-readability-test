@@ -15,10 +15,10 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+
 
 //function to help get punctuation
-bool is_punctuation (string letter)
+bool is_punctuation (std::string letter)
 {
     if(letter=="." || letter=="!" || letter=="?" || letter==":" || letter==";")
         return true;
@@ -27,7 +27,7 @@ bool is_punctuation (string letter)
 }
 
 //get the number of sentence
-int sentence_count (string phrase)
+int sentence_count (std::string phrase)
 {
     int sentence=0;
     
@@ -35,15 +35,12 @@ int sentence_count (string phrase)
     {
         if (is_punctuation(phrase.substr(i,1)))
             sentence++;
-        
     }
-    
     return sentence;
-    
 }
 
 //get the number of spaces
-bool is_space (string a)
+bool is_space (std::string a)
 {
     if (a == " ")
         return true;
@@ -52,20 +49,19 @@ bool is_space (string a)
 }
 
 //get the number of words
-int wordcount(string phrase)
+int wordcount(std::string phrase)
 {
     int word=1;
     for(int i=0 ; i< phrase.length(); i++)
     {
         if (is_space(phrase.substr(i,1)))
             word++;
-        
     }
     return word;
 }
 
 //helper function to get voels
-bool is_voel (string a)
+bool is_voel (std::string a)
 {
     if(a == "a" ||a == "i" ||a == "u" ||a == "e" ||a == "o" ||a == "y" ||a == "A" ||a == "I" ||a == "U" ||a == "E" ||a == "O" ||a == "Y" )
         return true;
@@ -74,7 +70,7 @@ bool is_voel (string a)
 }
 
 //helper function to determine "e" at the end of the word
-bool is_eend(string letter)
+bool is_eend(std::string letter)
 {
     if(letter=="e." || letter=="e!" || letter=="e?" || letter=="e:" || letter=="e;" || letter=="e "|| letter=="E." || letter=="E!" || letter=="E?" || letter=="E:" || letter=="E;" || letter=="E ")
         return true;
@@ -83,13 +79,13 @@ bool is_eend(string letter)
 }
 
 //get the number of syllables in a word given
-int syllacount (string word)
+int syllacount (std::string word)
 {
     int sylla=0;
     
     for(int i=0; i < word.length(); i++)
     {
-        if((word.substr(i,1)>="a"||word.substr(i,1)>="A")&&(word.substr(i,1)<="z"||word.substr(i,1)<="Z"))
+        if( (word.substr(i,1)>="a"||word.substr(i,1)>="A") && (word.substr(i,1)<="z"||word.substr(i,1)<="Z") )
         {
             
             if (is_voel(word.substr(i,1)))
@@ -114,7 +110,7 @@ int syllacount (string word)
 
 
 // to catch and send a word to the syllable counting function and store the number of syllable.
-int numbersylla_get(string phrase, int word)
+int numbersylla_get(std::string phrase, int word)
 {
     int syllables=0;
     
@@ -135,22 +131,22 @@ int numbersylla_get(string phrase, int word)
 
 
 //calculate and output the score
-void index (string phrase)
+void index (std::string phrase)
 {
     int word, sylla, sentence;
     
     //use functions
-    sentence= sentence_count(phrase);
-    word=wordcount(phrase);
-    sylla=numbersylla_get(phrase, word);
+    sentence = sentence_count(phrase);
+    word = wordcount(phrase);
+    sylla = numbersylla_get(phrase, word);
     
     //output
-    cout<<"Your number of sentences is: " <<sentence <<"\n";
-    cout<<"Your number of words is: " <<word <<"\n";
-    cout<<"Your number of syllables is: " <<sylla <<"\n";
+    std::cout<<"Your number of sentences is: " <<sentence <<"\n";
+    std::cout<<"Your number of words is: " <<word <<"\n";
+    std::cout<<"Your number of syllables is: " <<sylla <<"\n";
     
     double index = 206.835 - 84.6 * (double)(sylla)/word - 1.015 * word/sentence;
-    cout<<"Your readability index is: " <<index <<endl;
+    std::cout<<"Your readability index is: " << index << std::endl;
     
 }
 
@@ -158,10 +154,10 @@ int main()
 {
     //get a phrase and let functions work
     
-    string phrase;
+    std::string phrase;
     
-    cout<< "Please enter a phrase in English: ";
-    getline(cin,phrase);
+    std::cout<< "Please enter a phrase in English: ";
+    getline(std::cin,phrase);
     
     index(phrase);
     
