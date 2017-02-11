@@ -37,10 +37,10 @@ private:
     bool is_eend(std::string);
     
     
-    void sentence_count (std::string);
-    void wordcount(std::string);
-    int syllacount (std::string);
-    void numbersylla_get(std::string, int);
+    void sentence_count ();
+    void wordcount();
+    int syllabyword(std::string);
+    void syllacount();
     
     
     
@@ -50,7 +50,8 @@ private:
 
 Fktest::Fktest()
 {
-    double* index = new double(0);
+    this->index = new double(0);
+    
     std::string* newphrase = new std::string;
     
     std::cout<< "Please enter a phrase in English: ";
@@ -102,14 +103,13 @@ bool Fktest::is_punctuation (std::string letter)
 }
 
 //get the number of sentence
-void Fktest::sentence_count (std::string phrase)
+void Fktest::sentence_count ()
 {
     int sentence=0;
-    auto ite = phrase.begin();
     
-    for(int i=0 ; i< phrase.length(); i++)
+    for(int i=0 ; i< phrase->length(); i++)
     {
-        if (is_punctuation(phrase.substr(i,1)))
+        if (is_punctuation(phrase->substr(i,1)))
             sentence++;
     }
     n_sentence = sentence;
@@ -125,14 +125,14 @@ bool Fktest::is_space (std::string a)
 }
 
 //get the number of words
-void Fktest::wordcount(std::string phrase)
+void Fktest::wordcount()
 {
  
     int word = 1;
     
-    for(int i=0 ; i< phrase.length(); i++)
+    for(int i=0 ; i< phrase->length(); i++)
     {
-        if (is_space(phrase.substr(i,1)))
+        if (is_space(phrase->substr(i,1)))
             word++;
     }
     n_word = word;
@@ -157,7 +157,7 @@ bool Fktest::is_eend(std::string letter)
 }
 
 //get the number of syllables in a word given
-int Fktest::syllacount (std::string word)
+int Fktest::syllabyword (std::string word)
 {
     int sylla=0;
     
@@ -188,18 +188,18 @@ int Fktest::syllacount (std::string word)
 
 
 // to catch and send a word to the syllable counting function and store the number of syllable.
-void Fktest::numbersylla_get(std::string phrase, int word)
+void Fktest::syllacount()
 {
     
-    for(int i=0 ; i < word ; i++)
+    for(int i=0 ; i < n_word ; i++)
     {
         size_t space;
         
-        space = phrase.find(" ",0); //set a word between the beginning and space.
+        space = phrase->find(" ",0); //set a word between the beginning and space.
         
-        n_sylla += syllacount(phrase.substr(0,space +1)); //outputs a word to the syllable finding function
+        n_sylla += syllabyword(phrase->substr(0,space +1)); //outputs a word to the syllable finding function
         
-        phrase.erase(0,space +1 ); //erase the word done analysed.
+        phrase->erase(0,space +1 ); //erase the word done analysed.
         
     }
 }
@@ -208,6 +208,10 @@ void Fktest::numbersylla_get(std::string phrase, int word)
 //calculate and output the score
 void Fktest::calculateindex()
 {
+    sentence_count();
+    wordcount();
+    syllacount();
+    
     double temp;
     temp = 206.835 - 84.6 * (double)(n_sylla)/n_word - 1.015 * n_word/n_sentence;
     *index = temp;
@@ -220,6 +224,7 @@ int main()
     test.print();
     
     
-    system("pause");
+    
+    
     return 0;
 }
